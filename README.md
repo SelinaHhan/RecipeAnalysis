@@ -50,6 +50,7 @@ Using np.log, we created a new column log_calories and plot its histogram with 5
 
 After log transformation, the distribution became more symmetric and bell-shaped, peaking between log values 5 and 6 (roughly corresponding to 150–400 real calories). This transformation helps ensure that models later on do not overemphasize extreme calorie values and allows better visual comparisons.
 
+
 #### Log-Transformed Cooking Time
 Similarly, we create log_minutes from the minutes column. The histogram (Figure 2) shows an extreme right-skew in raw cooking time, with the transformed distribution improving interpretability and reducing the influence of long-tail outliers.
 
