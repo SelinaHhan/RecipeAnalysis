@@ -41,7 +41,12 @@ To understand the skewness of numeric features such as calories and cooking time
 
 Using np.log, we created a new column log_calories and plot its histogram with 50 bins. The resulting distribution (see Figure 1) reveals a right-skewed calorie distribution that becomes nearly normal after transformation, concentrating most values between log(4) and log(7). Zero or negative calorie values are replaced with 0 prior to log transformation.
 
-<Figure1>
+<iframe
+  src="assets/log_calories_hist.html"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
 
 After log transformation, the distribution became more symmetric and bell-shaped, peaking between log values 5 and 6 (roughly corresponding to 150–400 real calories). This transformation helps ensure that models later on do not overemphasize extreme calorie values and allows better visual comparisons.
 
