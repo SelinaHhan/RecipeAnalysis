@@ -94,8 +94,11 @@ We moved on to examine the missingness of the `rating` column in the merged Data
 **Cooking Time and Rating Missingness**
 
 **Null Hypothesis (H₀):** The missingness of ratings does not depend on the cooking time of the recipe.
+
 **Alternative Hypothesis (H₁):** The missingness of ratings does depend on the cooking time of the recipe.
+
 **Test Statistic:** The absolute difference in the mean cooking time (‘minutes’) between recipes with missing ratings and those with non-missing ratings.
+
 **Significance Level (α):** 0.05
 
 <Figure>
@@ -110,8 +113,11 @@ The observed statistic of 51.45 is indicated by the red vertical line on the gra
 **Calories and Rating**
 
 **Null Hypothesis (H₀):** The missingness of ratings does not depend on the amount of calories of the recipe.
+
 **Alternative Hypothesis (H₁):** The missingness of ratings does depend on the amount of calories of the recipe.
+
 **Test Statistic:** The absolute difference in mean calories between recipes with missing ratings and those with non-missing ratings.
+
 **Significance Level (α):** 0.05
 
 <Figure>
@@ -129,8 +135,11 @@ As mentioned earlier, we were curious whether high-calorie recipes tend to requi
 
 To evaluate this, we conducted a permutation test using the following setup:
 **Null Hypothesis:** There is no difference in cooking times between high-calorie and low-calorie recipes.
+
 **Alternative Hypothesis:** High-calorie recipes take more time to cook than low-calorie recipes.
+
 **Test Statistic:** The difference in mean cooking time (high-calorie minus low-calorie).
+
 **Significance Level:** 0.05
 
 We chose a permutation test because we do not assume normality or equal variance between the two groups, and we want to determine whether the observed difference in cooking time could arise by chance if calorie level had no effect on cooking time. This method is robust for comparing real-world data where underlying distributions may be unknown or skewed.
@@ -139,6 +148,22 @@ To perform the test, we split the data into two groups using the median calorie 
 <Figure>
 
 Since the p-value is far below the 0.05 threshold, we reject the null hypothesis and conclude that high-calorie recipes do take significantly longer to cook than low-calorie recipes. This supports our hypothesis that calorie-dense dishes tend to involve more complex or time-consuming preparation steps.
+
+
+## Framing a Prediction Problem
+In this project, we aim to predict the number of calories in a recipe based on its cooking time, which we frame as a regression problem. Since calories is a continuous numerical variable, we treat this as a standard supervised learning task where the model learns to output a numeric value rather than classifying into categories.
+
+We chose calories as the response variable because it is a fundamental nutritional attribute that users may want to estimate even before seeing full ingredient details. Accurately predicting the calorie content based on preparation characteristics like cooking time may help users or platforms make quicker judgments about recipe suitability, especially for dietary or health-related applications.
+
+The predictor we are using is `minutes`, which represents the total cooking time for the recipe. From our exploratory analysis, we observed a positive correlation between cooking time and calories—longer recipes tend to have higher calorie counts on average. This relationship is likely due to the fact that more complex or time-intensive recipes often involve richer ingredients or larger portions, contributing to increased caloric density.
+
+To evaluate our model’s performance, we will use Root Mean Squared Error (RMSE) and R² score:
+RMSE measures the average magnitude of prediction errors, giving higher weight to larger errors.
+R² score indicates how much of the variation in calorie content can be explained by cooking time.
+
+Since we are only using information available prior to cooking (i.e., time estimate), this model may also serve as a simple calorie estimator in situations where ingredient data is not yet available.
+
+This setup gives us a straightforward, interpretable regression problem based on a single predictor. In future iterations, we could expand the model by incorporating additional features like nutrient proportions, ingredient counts, or recipe type.
 
 
 
