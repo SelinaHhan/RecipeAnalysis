@@ -176,4 +176,9 @@ This setup gives us a straightforward, interpretable regression problem based on
 
 
 
+## Baseline Model
+For our baseline model, we implemented a linear regression pipeline to predict the number of calories in a recipe based on two features: season and minutes. The minutes column represents the cooking time of the recipe and is a numerical variable, while season is a categorical feature derived from the month in which the recipe was submitted. We calculated the season by taking the month modulo 12 and dividing it into four seasonal groups.
 
+To properly handle the categorical feature, we used one-hot encoding on the season column through a ColumnTransformer, which ensures that the linear regression model interprets each season as a separate binary feature. The numerical feature, minutes, was passed through without transformation.
+
+We split the dataset into training and testing sets with an 80/20 ratio and trained our pipeline using the training data. The model's performance on the test set resulted in an R² score of 0.0004 and a root mean squared error (RMSE) of approximately 588.74. These metrics indicate that the baseline model does not capture much of the variance in calorie values, suggesting that season and minutes alone are not strong predictors of calorie content. Future models may benefit from incorporating more relevant nutritional or ingredient-level features.
