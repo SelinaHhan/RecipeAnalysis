@@ -32,6 +32,50 @@ This column estimates what fraction of total calories in the recipe comes from c
 
 This column calculates the proportion of total calories in a recipe that comes the total fat (PDV) column, converting PDV to grams based on the assumption that 100% fat PDV = 58 grams. Since 1 gram of fat = 9 kcal, we multiply the result by 9 to get calories from fat. Finally, we divide by the total calories of the recipe.
 
+
 ### Univariate Analysis
+To explore the distribution of numerical features, we focused on two key variables: `calories` and `minutes` (cookingg time). Due to skewness, we applied log transformation.
+
+#### Log-Transformed Calories
+To understand the skewness of numeric features such as calories and cooking time, we log-transform these variables to make their distributions more symmetric:
+
+Using np.log, we created a new column log_calories and plot its histogram with 50 bins. The resulting distribution (see Figure 1) reveals a right-skewed calorie distribution that becomes nearly normal after transformation, concentrating most values between log(4) and log(7). Zero or negative calorie values are replaced with 0 prior to log transformation.
+
+<Figure1>
+
+After log transformation, the distribution became more symmetric and bell-shaped, peaking between log values 5 and 6 (roughly corresponding to 150–400 real calories). This transformation helps ensure that models later on do not overemphasize extreme calorie values and allows better visual comparisons.
+
+#### Log-Transformed Cooking Time
+Similarly, we create log_minutes from the minutes column. The histogram (Figure 2) shows an extreme right-skew in raw cooking time, with the transformed distribution improving interpretability and reducing the influence of long-tail outliers.
+
+<Figure2>
+
+The transformed histogram shows that most recipes now fall between 2 and 5 log-minutes (which translates to approximately 7–150 minutes in real time). The transformation improves interpretability and ensures subsequent comparisons between groups are not dominated by outliers.
+
+
+### Bivariate Analysis
+To compare cooking behavior across different calorie levels, we split recipes into two groups based on the median calorie value:
+
+<Figure3>
+
+While both groups peak around log-minutes ≈ 4 (about 55 minutes), high-calorie recipes show a slightly wider spread and a second bump at higher durations. This suggests that high-calorie recipes may involve longer or more complex preparation on average, but the overlap between the groups is significant.
+
+To further compare raw cooking times, we used a box plot(figure4) grouped by calorie_group().
+<Figure4>
+
+The box plot highlights that high-calorie recipes generally have higher medians and more extreme high-end outliers. The median cooking time for high-calorie recipes is noticeably larger, and the interquartile range (IQR) is also slightly wider, suggesting more variability in their preparation times.
+
+This bivariate analysis supports the hypothesis that high-calorie dishes are more time-intensive, possibly due to longer ingredient prep, marination, or cooking processes.
+
+### Interesting Aggregates
+To understand whether cooking time differs systematically between high- and low-calorie recipes, we calculated summary statistics for each group. However, before doing so, we first removed outliers from the minutes column to ensure that our comparisons were not skewed by extreme values. We first remove Outliers since cooking times in the dataset span an extremely wide range, with some recipes taking thousands or even millions of minutes. To filter out these implausible or extreme durations, we applied the Interquartile Range (IQR) method. 
+
+On average, high-calorie recipes take significantly longer to cook than low-calorie recipes. The mean for high-calorie dishes is around 42 minutes, compared to 31 minutes for low-calorie ones. The medians (40 vs. 25) reinforce this trend, indicating that the difference is not just due to a few high-duration values.However, both groups exhibit considerable standard deviation, reflecting high variability in cooking times. This suggests that while the trend exists, further statistical testing (e.g., t-test or Mann–Whitney U) would be needed to determine whether the difference is statistically significant. This aggregate analysis helps us generate hypotheses: for example, that calorie-rich dishes may involve more steps, longer ingredient preparation, or extended baking/cooking processes.
+
+<table>
+
+
+## Assessment of Missingness
+Three columns, `date`, `rating`, and `review`, in the merged dataset have a significant amount of missing values, so we decided to assess the missingness on the dataframe.
 
 
