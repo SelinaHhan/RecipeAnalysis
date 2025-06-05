@@ -67,7 +67,12 @@ To compare cooking behavior across different calorie levels, we split recipes in
 While both groups peak around log-minutes ≈ 4 (about 55 minutes), high-calorie recipes show a slightly wider spread and a second bump at higher durations. This suggests that high-calorie recipes may involve longer or more complex preparation on average, but the overlap between the groups is significant.
 
 To further compare raw cooking times, we used a box plot(figure4) grouped by calorie_group().
-<Figure4>
+<iframe
+  src="assets/boxplot.html"
+  width="700"
+  height="600"
+  frameborder="0"
+></iframe>
 
 The box plot highlights that high-calorie recipes generally have higher medians and more extreme high-end outliers. The median cooking time for high-calorie recipes is noticeably larger, and the interquartile range (IQR) is also slightly wider, suggesting more variability in their preparation times.
 
