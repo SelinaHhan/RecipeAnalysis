@@ -43,7 +43,7 @@ Using np.log, we created a new column log_calories and plot its histogram with 5
 
 <iframe
   src="assets/log_calories_hist.html"
-  width="600"
+  width="700"
   height="600"
   frameborder="0"
 ></iframe>
