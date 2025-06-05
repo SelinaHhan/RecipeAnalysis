@@ -83,4 +83,63 @@ On average, high-calorie recipes take significantly longer to cook than low-calo
 ## Assessment of Missingness
 Three columns, `date`, `rating`, and `review`, in the merged dataset have a significant amount of missing values, so we decided to assess the missingness on the dataframe.
 
+### NMAR Analysis
+We believe that the missingness of the `rating` column is Not Missing At Random (NMAR) because the likelihood of a missing rating may depend on the rating itself—an unobserved value. For example, users who felt indifferent or dissatisfied with a recipe might be less motivated to leave a rating, as they may not feel strongly enough to take the extra steps required. In contrast, users with strong opinions—whether highly positive or negative—are more likely to leave ratings due to the emotional motivation to share their experiences. This behavior creates a pattern where missing ratings are systematically related to users’ underlying, unreported impressions of the recipe.
+
+To better assess whether the missingness is NMAR or potentially Missing At Random (MAR), follow-up surveys could be conducted to ask users why they chose not to rate a recipe. If their reasons are unrelated to the actual rating they would have given (e.g., time constraints or forgetting), the missingness could be treated as MAR instead.
+
+### Missing Dependency
+We moved on to examine the missingness of the `rating` column in the merged DataFrame by testing whether its missingness is dependent on other variables. Specifically, we are investigating whether the likelihood of a missing rating depends on the cooking time, represented by the `minutes` column.
+
+**Cooking Time and Rating Missingness**
+
+**Null Hypothesis (H₀):** The missingness of ratings does not depend on the cooking time of the recipe.
+**Alternative Hypothesis (H₁):** The missingness of ratings does depend on the cooking time of the recipe.
+**Test Statistic:** The absolute difference in the mean cooking time (‘minutes’) between recipes with missing ratings and those with non-missing ratings.
+**Significance Level (α):** 0.05
+
+<Figure>
+
+We ran a permutation test by shuffling the missingness of minutes for 1000 times to collect 1000 simulating mean differences in the two distributions as described in the test statistic.
+<Figure>
+
+
+The observed statistic of 51.45 is indicated by the red vertical line on the graph. Since the p-value that we found (0.128) is >0.05 which is the significance level that we set, we **fail to reject the null hypothesis**. The missingness of ‘rating’ does not depend on the cooking time of the recipe.
+
+
+**Calories and Rating**
+
+**Null Hypothesis (H₀):** The missingness of ratings does not depend on the amount of calories of the recipe.
+**Alternative Hypothesis (H₁):** The missingness of ratings does depend on the amount of calories of the recipe.
+**Test Statistic:** The absolute difference in mean calories between recipes with missing ratings and those with non-missing ratings.
+**Significance Level (α):** 0.05
+
+<Figure>
+
+We ran another permutation test by shuffling the missingness of calories for 1000 times to collect 1000 simulating mean differences in the two distributions as described in the test statistic.
+
+<Figure>
+
+The observed statistic of 69.01 is indicated by the red vertical line on the graph. Since the p-value that we found (0.0) is < 0.05 which is the significance level that we set, we **reject the null hypothesis**. The missingness of rating does depend on the amount of calories of the recipe.
+
+
+
+## Hypothesis Testing
+As mentioned earlier, we were curious whether high-calorie recipes tend to require more cooking time than low-calorie recipes. Since calorie content often reflects the complexity or richness of a dish, we hypothesized that higher-calorie recipes might involve more ingredients, longer preparation steps, or extended cooking methods.
+
+To evaluate this, we conducted a permutation test using the following setup:
+**Null Hypothesis:** There is no difference in cooking times between high-calorie and low-calorie recipes.
+**Alternative Hypothesis:** High-calorie recipes take more time to cook than low-calorie recipes.
+**Test Statistic:** The difference in mean cooking time (high-calorie minus low-calorie).
+**Significance Level:** 0.05
+
+We chose a permutation test because we do not assume normality or equal variance between the two groups, and we want to determine whether the observed difference in cooking time could arise by chance if calorie level had no effect on cooking time. This method is robust for comparing real-world data where underlying distributions may be unknown or skewed.
+To perform the test, we split the data into two groups using the median calorie value to define "high-calorie" and "low-calorie" recipes. And then we computed the observed difference in mean cooking time between the two groups. The result was approximately +57.5 minutes, indicating that on average, high-calorie recipes take longer to prepare. We then shuffled the group labels (high/low calorie) 1000 times, each time recomputing the difference in means to generate a null distribution under the assumption of no association. Lastly, we compared the observed difference to this null distribution to compute a one-tailed p-value.
+
+<Figure>
+
+Since the p-value is far below the 0.05 threshold, we reject the null hypothesis and conclude that high-calorie recipes do take significantly longer to cook than low-calorie recipes. This supports our hypothesis that calorie-dense dishes tend to involve more complex or time-consuming preparation steps.
+
+
+
 
