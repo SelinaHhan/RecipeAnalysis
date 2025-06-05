@@ -78,7 +78,11 @@ To understand whether cooking time differs systematically between high- and low-
 
 On average, high-calorie recipes take significantly longer to cook than low-calorie recipes. The mean for high-calorie dishes is around 42 minutes, compared to 31 minutes for low-calorie ones. The medians (40 vs. 25) reinforce this trend, indicating that the difference is not just due to a few high-duration values.However, both groups exhibit considerable standard deviation, reflecting high variability in cooking times. This suggests that while the trend exists, further statistical testing (e.g., t-test or Mann–Whitney U) would be needed to determine whether the difference is statistically significant. This aggregate analysis helps us generate hypotheses: for example, that calorie-rich dishes may involve more steps, longer ingredient preparation, or extended baking/cooking processes.
 
-<table>
+| Calorie Group | Max  | Min | Median | Mean     | Count  | Std Dev   |
+|---------------|------|-----|--------|----------|--------|-----------|
+| High Calories | 120  | 0   | 40.0   | 42.44    | 101860 | 25.37     |
+| Low Calories  | 120  | 1   | 25.0   | 31.43    | 108278 | 22.98     |
+
 
 
 ## Assessment of Missingness
