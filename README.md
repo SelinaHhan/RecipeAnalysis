@@ -134,6 +134,8 @@ The observed statistic of 69.01 is indicated by the red vertical line on the gra
 As mentioned earlier, we were curious whether high-calorie recipes tend to require more cooking time than low-calorie recipes. Since calorie content often reflects the complexity or richness of a dish, we hypothesized that higher-calorie recipes might involve more ingredients, longer preparation steps, or extended cooking methods.
 
 To evaluate this, we conducted a permutation test using the following setup:
+
+
 **Null Hypothesis:** There is no difference in cooking times between high-calorie and low-calorie recipes.
 
 **Alternative Hypothesis:** High-calorie recipes take more time to cook than low-calorie recipes.
@@ -157,9 +159,11 @@ We chose calories as the response variable because it is a fundamental nutrition
 
 The predictor we are using is `minutes`, which represents the total cooking time for the recipe. From our exploratory analysis, we observed a positive correlation between cooking time and calories—longer recipes tend to have higher calorie counts on average. This relationship is likely due to the fact that more complex or time-intensive recipes often involve richer ingredients or larger portions, contributing to increased caloric density.
 
-To evaluate our model’s performance, we will use Root Mean Squared Error (RMSE) and R² score:
-RMSE measures the average magnitude of prediction errors, giving higher weight to larger errors.
-R² score indicates how much of the variation in calorie content can be explained by cooking time.
+To evaluate our model’s performance, we will use **Root Mean Squared Error (RMSE)** and **R² score**:
+
+**RMSE** measures the average magnitude of prediction errors, giving higher weight to larger errors.
+
+**R²** score indicates how much of the variation in calorie content can be explained by cooking time.
 
 Since we are only using information available prior to cooking (i.e., time estimate), this model may also serve as a simple calorie estimator in situations where ingredient data is not yet available.
 
