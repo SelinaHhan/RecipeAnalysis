@@ -3,4 +3,4 @@ plugins:
 - jekyll-remote-theme # add this line to the plugins list if you already have one
 
 title: [Investigation on the Relationship Between Cooking Time and Amount of Calories]
-description: Authors: Michelle Chen & Selina Han
+Authors: Michelle Chen & Selina Han
