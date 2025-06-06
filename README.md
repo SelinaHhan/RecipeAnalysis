@@ -266,6 +266,7 @@ We split the dataset into training and testing sets with an 80/20 ratio and trai
 
 ## Final Model
 For the final model, we built a linear regression pipeline to **predict the total calories** of a recipe based on a selected set of features that are available before a recipe is prepared or rated. The features we chose are:
+
 `season`
 
 `minutes`
@@ -279,24 +280,30 @@ For the final model, we built a linear regression pipeline to **predict the tota
 We evaluated the model using R² score and Root Mean Squared Error (RMSE) to assess how well the model explains the variation in calories and how far its predictions deviate from the true values.
 
 `season`
+
 This column represents the seasonal label derived from the submission date of the recipe. The rationale for including this feature is that certain types of dishes are more common or richer in particular seasons (e.g., hearty, high-calorie recipes in winter). This categorical feature was one-hot encoded using `OneHotEncoder` in our preprocessing pipeline to ensure proper handling by the model.
 
 `minutes`
+
 This column measures the total cooking time in minutes. We included it because our earlier EDA and hypothesis testing showed that high-calorie recipes tend to take longer to prepare. Since cooking time varies widely across recipes, we applied standardization using `StandardScaler` to make this feature more numerically stable and prevent extreme values from dominating the model.
 
 `prop_fat`
+
 This column indicates the proportion of calories in the recipe that come from fat, calculated using the nutritional PDV information. We chose this feature because fat content is a major contributor to total caloric value, and recipes with higher fat density are expected to have higher calorie counts. This column was left as-is since it’s already in proportion form and centered around meaningful units.
 
 `n_ingredients`
+
 This column counts the number of ingredients in a recipe. We calculated the correlation and found a slight positive relationship with calorie content (correlation ≈ 0.13). The intuition is that recipes with more ingredients might have more complex or larger portions, which often lead to higher calorie totals. Although it was initially considered for transformation, we ultimately excluded it from the final preprocessor to simplify the pipeline.
 
 `n_steps`
+
 This column captures the number of procedural steps in the recipe instructions. Similar to `n_ingredients`, we found a positive correlation (~0.15) with calories, suggesting that more involved recipes may lead to richer, higher-calorie outcomes. Since the distribution of `n_steps` is skewed (as shown in the histogram), we applied standardization to scale this feature properly for modeling.
 
 We used **LinearRegression** from sklearn wrapped in a pipeline with preprocessing steps applied through ColumnTransformer. The data was split into a training and testing set using an 80/20 ratio with a fixed random_state for reproducibility.
 The performance of our final model was:
 
 R² Score: 0.0456
+
 RMSE: 575.25
 
 By including additional features such as `prop_fat`, `n_ingredients`, and `n_steps`, we were able to increase the explanatory power of the model and reduce prediction error. Although the overall R² remains modest, the enhanced model captures more meaningful variation in recipe calorie content than the baseline.
