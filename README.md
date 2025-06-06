@@ -54,7 +54,7 @@ After log transformation, the distribution became more symmetric and bell-shaped
 #### Log-Transformed Cooking Time
 Similarly, we create log_minutes from the minutes column. The histogram (Figure 2) shows an extreme right-skew in raw cooking time, with the transformed distribution improving interpretability and reducing the influence of long-tail outliers.
 
-<Figure2>
+Figure2
 
 The transformed histogram shows that most recipes now fall between 2 and 5 log-minutes (which translates to approximately 7–150 minutes in real time). The transformation improves interpretability and ensures subsequent comparisons between groups are not dominated by outliers.
 
