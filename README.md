@@ -61,7 +61,7 @@ To explore the distribution of numerical features, we focused on two key variabl
 #### Log-Transformed Calories
 To understand the skewness of numeric features such as calories and cooking time, we log-transform these variables to make their distributions more symmetric:
 
-Using np.log, we created a new column log_calories and plot its histogram with 50 bins. The resulting distribution (see Figure 1) reveals a right-skewed calorie distribution that becomes nearly normal after transformation, concentrating most values between log(4) and log(7). Zero or negative calorie values are replaced with 0 prior to log transformation.
+Using np.log, we created a new column log_calories and plot its histogram with 50 bins. The resulting distribution reveals a right-skewed calorie distribution that becomes nearly normal after transformation, concentrating most values between log(4) and log(7). Zero or negative calorie values are replaced with 0 prior to log transformation.
 
 <iframe
   src="assets/log_calories_hist.html"
@@ -74,7 +74,7 @@ After log transformation, the distribution became more symmetric and bell-shaped
 
 
 #### Log-Transformed Cooking Time
-Similarly, we create log_minutes from the minutes column. The histogram (Figure 2) shows an extreme right-skew in raw cooking time, with the transformed distribution improving interpretability and reducing the influence of long-tail outliers.
+Similarly, we create log_minutes from the minutes column. The histogram shows an extreme right-skew in raw cooking time, with the transformed distribution improving interpretability and reducing the influence of long-tail outliers.
 
 <iframe
   src="assets/log_mins_hist.html"
@@ -84,6 +84,7 @@ Similarly, we create log_minutes from the minutes column. The histogram (Figure 
 ></iframe>
 
 The transformed histogram shows that most recipes now fall between 2 and 5 log-minutes (which translates to approximately 7–150 minutes in real time). The transformation improves interpretability and ensures subsequent comparisons between groups are not dominated by outliers.
+
 
 
 ### Bivariate Analysis
@@ -98,7 +99,7 @@ To compare cooking behavior across different calorie levels, we split recipes in
 
 While both groups peak around log-minutes ≈ 4 (about 55 minutes), high-calorie recipes show a slightly wider spread and a second bump at higher durations. This suggests that high-calorie recipes may involve longer or more complex preparation on average, but the overlap between the groups is significant.
 
-To further compare raw cooking times, we used a box plot(figure4) grouped by calorie_group().
+To further compare raw cooking times, we used a box plot grouped by calorie group.
 
 <iframe
   src="assets/boxplot.html"
@@ -111,6 +112,8 @@ The box plot highlights that high-calorie recipes generally have higher medians 
 
 This bivariate analysis supports the hypothesis that high-calorie dishes are more time-intensive, possibly due to longer ingredient prep, marination, or cooking processes.
 
+
+
 ### Interesting Aggregates
 To understand whether cooking time differs systematically between high- and low-calorie recipes, we calculated summary statistics for each group. However, before doing so, we first removed outliers from the minutes column to ensure that our comparisons were not skewed by extreme values. We first remove Outliers since cooking times in the dataset span an extremely wide range, with some recipes taking thousands or even millions of minutes. To filter out these implausible or extreme durations, we applied the Interquartile Range (IQR) method. 
 
@@ -120,6 +123,7 @@ On average, high-calorie recipes take significantly longer to cook than low-calo
 |---------------|------|-----|--------|----------|--------|-----------|
 | High Calories | 120  | 0   | 40.0   | 42.44    | 101860 | 25.37     |
 | Low Calories  | 120  | 1   | 25.0   | 31.43    | 108278 | 22.98     |
+
 
 
 
