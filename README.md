@@ -62,11 +62,12 @@ The transformed histogram shows that most recipes now fall between 2 and 5 log-m
 ### Bivariate Analysis
 To compare cooking behavior across different calorie levels, we split recipes into two groups based on the median calorie value:
 
-<Figure3>
+Figure3
 
 While both groups peak around log-minutes ≈ 4 (about 55 minutes), high-calorie recipes show a slightly wider spread and a second bump at higher durations. This suggests that high-calorie recipes may involve longer or more complex preparation on average, but the overlap between the groups is significant.
 
 To further compare raw cooking times, we used a box plot(figure4) grouped by calorie_group().
+
 <iframe
   src="assets/boxplot.html"
   width="700"
