@@ -313,7 +313,7 @@ To assess fairness, we evaluated the model's Root Mean Squared Error (RMSE) sepa
 
 
 <iframe
-  src="assets/fairness.html"
+  src="assets/fairness2.html"
   width="700"
   height="600"
   frameborder="0"
