@@ -149,19 +149,12 @@ We moved on to examine the missingness of the `rating` column in the merged Data
 **Significance Level (α):** 0.05
 
 
-<iframe
-  src="assets/permutation_min_line.html"
-  width="700"
-  height="600"
-  frameborder="0"
-></iframe>
-
 
 We ran a permutation test by shuffling the missingness of minutes for 1000 times to collect 1000 simulating mean differences in the two distributions as described in the test statistic.
 
 
 <iframe
-  src="assets/permutation_min.html"
+  src="assets/permutation_min2.html"
   width="700"
   height="600"
   frameborder="0"
@@ -182,19 +175,11 @@ The observed statistic of 51.45 is indicated by the red vertical line on the gra
 **Significance Level (α):** 0.05
 
 
-<iframe
-  src="assets/permutation_rating_line.html"
-  width="700"
-  height="600"
-  frameborder="0"
-></iframe>
-
-
 We ran another permutation test by shuffling the missingness of calories for 1000 times to collect 1000 simulating mean differences in the two distributions as described in the test statistic.
 
 
 <iframe
-  src="assets/permutation_rating.html"
+  src="assets/permutation_rating2.html"
   width="700"
   height="600"
   frameborder="0"
@@ -223,7 +208,7 @@ We chose a permutation test because we do not assume normality or equal variance
 To perform the test, we split the data into two groups using the median calorie value to define "high-calorie" and "low-calorie" recipes. And then we computed the observed difference in mean cooking time between the two groups. The result was approximately +57.5 minutes, indicating that on average, high-calorie recipes take longer to prepare. We then shuffled the group labels (high/low calorie) 1000 times, each time recomputing the difference in means to generate a null distribution under the assumption of no association. Lastly, we compared the observed difference to this null distribution to compute a one-tailed p-value.
 
 <iframe
-  src="assets/hypothesis_low_high.html"
+  src="assets/hypothesis_low_high2.html"
   width="700"
   height="600"
   frameborder="0"
