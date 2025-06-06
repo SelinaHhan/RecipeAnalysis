@@ -23,6 +23,13 @@ The first dataset, recipe, contains 83782 rows, indicating 83782 unique recipes,
 
 The second dataset, interactions, contains 731927 rows and each row contains a review from the user on a specific recipe. The columns it includes are:
 
+| Column      | Description             |
+|-------------|-------------------------|
+| `'user_id'` | User ID                 |
+| `'recipe_id'` | Recipe ID              |
+| `'date'`    | Date of interaction     |
+| `'rating'`  | Rating given            |
+| `'review'`  | Review text             |
 
 
 
