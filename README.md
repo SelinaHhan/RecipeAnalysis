@@ -13,16 +13,17 @@ The second dataset, interactions, contains 731927 rows and each row contains a r
 
 
 
-**Given the datasets, we are investigating whether there is a relationship between cooking time and the amount of calories in a recipe.** To facilitate this analysis, we first extracted and separated the values in the ‘nutrition’ column into individual components such as ‘calories (#)’, ‘total fat (PDV)’, and others. We also made use of the ‘minutes’ column, which records the total time required to prepare and cook each recipe. These two columns—‘calories (#)’ and ‘minutes’—are central to our analysis. To better explore potential patterns, we performed data cleaning to handle missing or extreme values and conducted summary statistics to examine general trends across different cooking durations.
+**Given the datasets, we are investigating whether there is a relationship between cooking time and the amount of calories in a recipe.** To facilitate this analysis, we first extracted and separated the values in the `nutrition` column into individual components such as `calories (#)`, `total fat (PDV)`, and others. We also made use of the `minutes` column, which records the total time required to prepare and cook each recipe. These two columns—`calories (#)` and `minutes`—are central to our analysis. To better explore potential patterns, we performed data cleaning to handle missing or extreme values and conducted summary statistics to examine general trends across different cooking durations.
 
 By examining how cooking time correlates with caloric content, we hope to gain insights into whether quicker meals tend to be lighter or more calorie-dense, or whether longer recipes are associated with richer and potentially higher-calorie dishes. This investigation could be useful for health-conscious users aiming to balance nutrition with convenience and may also provide helpful feedback for recipe creators on Food.com as they design meals that align with users’ time and dietary preferences. Future research may further explore how cooking complexity, ingredient types, or even cuisine styles influence this relationship.
 
 
 ## Data Cleaning and EDA
 We begin by merging the raw recipe metadata (RAW_recipes.csv) with user interactions data (interactions.csv) using id and recipe_id as keys. This integration enables us to analyze both recipe attributes and user behaviors simultaneously. To ensure cleaner data, we replace 0.0 ratings with NaN, and compute each recipe's average_rating by grouping on the recipe name.
+
 The original nutrition column in the dataset contains nutritional information for each recipe, stored as a string representation of a list. To make this column usable, we flattened the list into separate columns, one for each nutritional component using lambda function. 
 
-We created two new columns, prop_carbohydrates and prop_fat, to represent the proportion of calories in a recipe that come specifically from carbohydrates and fat, respectively. These derived features allow us to better understand the nutritional density and macronutrient breakdown of each recipe, which may be predictive of user preferences or ratings.
+We created two new columns, `prop_carbohydrates` and `prop_fat`, to represent the proportion of calories in a recipe that come specifically from carbohydrates and fat, respectively. These derived features allow us to better understand the nutritional density and macronutrient breakdown of each recipe, which may be predictive of user preferences or ratings.
 
 `prop_carbohydrates`
 
@@ -34,7 +35,7 @@ This column calculates the proportion of total calories in a recipe that comes t
 
 
 ### Univariate Analysis
-To explore the distribution of numerical features, we focused on two key variables: `calories` and `minutes` (cookingg time). Due to skewness, we applied log transformation.
+To explore the distribution of numerical features, we focused on two key variables: `calories` and `minutes` (cooking time). Due to skewness, we applied log transformation.
 
 #### Log-Transformed Calories
 To understand the skewness of numeric features such as calories and cooking time, we log-transform these variables to make their distributions more symmetric:
@@ -54,7 +55,12 @@ After log transformation, the distribution became more symmetric and bell-shaped
 #### Log-Transformed Cooking Time
 Similarly, we create log_minutes from the minutes column. The histogram (Figure 2) shows an extreme right-skew in raw cooking time, with the transformed distribution improving interpretability and reducing the influence of long-tail outliers.
 
-Figure2
+<iframe
+  src="assets/log_mins_hist.html"
+  width="700"
+  height="600"
+  frameborder="0"
+></iframe>
 
 The transformed histogram shows that most recipes now fall between 2 and 5 log-minutes (which translates to approximately 7–150 minutes in real time). The transformation improves interpretability and ensures subsequent comparisons between groups are not dominated by outliers.
 
@@ -62,7 +68,12 @@ The transformed histogram shows that most recipes now fall between 2 and 5 log-m
 ### Bivariate Analysis
 To compare cooking behavior across different calorie levels, we split recipes into two groups based on the median calorie value:
 
-Figure3
+<iframe
+  src="assets/cooking_time_hist.html"
+  width="700"
+  height="600"
+  frameborder="0"
+></iframe>
 
 While both groups peak around log-minutes ≈ 4 (about 55 minutes), high-calorie recipes show a slightly wider spread and a second bump at higher durations. This suggests that high-calorie recipes may involve longer or more complex preparation on average, but the overlap between the groups is significant.
 
@@ -82,7 +93,7 @@ This bivariate analysis supports the hypothesis that high-calorie dishes are mor
 ### Interesting Aggregates
 To understand whether cooking time differs systematically between high- and low-calorie recipes, we calculated summary statistics for each group. However, before doing so, we first removed outliers from the minutes column to ensure that our comparisons were not skewed by extreme values. We first remove Outliers since cooking times in the dataset span an extremely wide range, with some recipes taking thousands or even millions of minutes. To filter out these implausible or extreme durations, we applied the Interquartile Range (IQR) method. 
 
-On average, high-calorie recipes take significantly longer to cook than low-calorie recipes. The mean for high-calorie dishes is around 42 minutes, compared to 31 minutes for low-calorie ones. The medians (40 vs. 25) reinforce this trend, indicating that the difference is not just due to a few high-duration values.However, both groups exhibit considerable standard deviation, reflecting high variability in cooking times. This suggests that while the trend exists, further statistical testing (e.g., t-test or Mann–Whitney U) would be needed to determine whether the difference is statistically significant. This aggregate analysis helps us generate hypotheses: for example, that calorie-rich dishes may involve more steps, longer ingredient preparation, or extended baking/cooking processes.
+On average, high-calorie recipes take significantly longer to cook than low-calorie recipes. The mean for high-calorie dishes is around 42 minutes, compared to 31 minutes for low-calorie ones. The medians (40 vs. 25) reinforce this trend, indicating that the difference is not just due to a few high-duration values. However, both groups exhibit considerable standard deviation, reflecting high variability in cooking times. This suggests that while the trend exists, further statistical testing would be needed to determine whether the difference is statistically significant. This aggregate analysis helps us generate hypotheses: for example, that calorie-rich dishes may involve more steps, longer ingredient preparation, or extended baking/cooking processes.
 
 | Calorie Group | Max  | Min | Median | Mean     | Count  | Std Dev   |
 |---------------|------|-----|--------|----------|--------|-----------|
@@ -112,10 +123,24 @@ We moved on to examine the missingness of the `rating` column in the merged Data
 
 **Significance Level (α):** 0.05
 
-<Figure>
+
+<iframe
+  src="assets/permutation_min_line.html"
+  width="700"
+  height="600"
+  frameborder="0"
+></iframe>
+
 
 We ran a permutation test by shuffling the missingness of minutes for 1000 times to collect 1000 simulating mean differences in the two distributions as described in the test statistic.
-<Figure>
+
+
+<iframe
+  src="assets/permutation_min.html"
+  width="700"
+  height="600"
+  frameborder="0"
+></iframe>
 
 
 The observed statistic of 51.45 is indicated by the red vertical line on the graph. Since the p-value that we found (0.128) is >0.05 which is the significance level that we set, we **fail to reject the null hypothesis**. The missingness of ‘rating’ does not depend on the cooking time of the recipe.
@@ -131,11 +156,25 @@ The observed statistic of 51.45 is indicated by the red vertical line on the gra
 
 **Significance Level (α):** 0.05
 
-<Figure>
+
+<iframe
+  src="assets/permutation_rating_line.html"
+  width="700"
+  height="600"
+  frameborder="0"
+></iframe>
+
 
 We ran another permutation test by shuffling the missingness of calories for 1000 times to collect 1000 simulating mean differences in the two distributions as described in the test statistic.
 
-<Figure>
+
+<iframe
+  src="assets/permutation_rating.html"
+  width="700"
+  height="600"
+  frameborder="0"
+></iframe>
+
 
 The observed statistic of 69.01 is indicated by the red vertical line on the graph. Since the p-value that we found (0.0) is < 0.05 which is the significance level that we set, we **reject the null hypothesis**. The missingness of rating does depend on the amount of calories of the recipe.
 
@@ -158,7 +197,21 @@ To evaluate this, we conducted a permutation test using the following setup:
 We chose a permutation test because we do not assume normality or equal variance between the two groups, and we want to determine whether the observed difference in cooking time could arise by chance if calorie level had no effect on cooking time. This method is robust for comparing real-world data where underlying distributions may be unknown or skewed.
 To perform the test, we split the data into two groups using the median calorie value to define "high-calorie" and "low-calorie" recipes. And then we computed the observed difference in mean cooking time between the two groups. The result was approximately +57.5 minutes, indicating that on average, high-calorie recipes take longer to prepare. We then shuffled the group labels (high/low calorie) 1000 times, each time recomputing the difference in means to generate a null distribution under the assumption of no association. Lastly, we compared the observed difference to this null distribution to compute a one-tailed p-value.
 
-<Figure>
+<iframe
+  src="assets/hypothesis_low_high.html"
+  width="700"
+  height="600"
+  frameborder="0"
+></iframe>
+
+
+<iframe
+  src="assets/hypothesis_empirical.html"
+  width="700"
+  height="600"
+  frameborder="0"
+></iframe>
+
 
 Since the p-value is far below the 0.05 threshold, we reject the null hypothesis and conclude that high-calorie recipes do take significantly longer to cook than low-calorie recipes. This supports our hypothesis that calorie-dense dishes tend to involve more complex or time-consuming preparation steps.
 
@@ -188,3 +241,69 @@ For our baseline model, we implemented a linear regression pipeline to predict t
 To properly handle the categorical feature, we used one-hot encoding on the season column through a ColumnTransformer, which ensures that the linear regression model interprets each season as a separate binary feature. The numerical feature, minutes, was passed through without transformation.
 
 We split the dataset into training and testing sets with an 80/20 ratio and trained our pipeline using the training data. The model's performance on the test set resulted in an R² score of 0.0004 and a root mean squared error (RMSE) of approximately 588.74. These metrics indicate that the baseline model does not capture much of the variance in calorie values, suggesting that season and minutes alone are not strong predictors of calorie content. Future models may benefit from incorporating more relevant nutritional or ingredient-level features.
+
+
+## Final Model
+For the final model, we built a linear regression pipeline to **predict the total calories** of a recipe based on a selected set of features that are available before a recipe is prepared or rated. The features we chose are:
+`season`
+
+`minutes`
+
+`prop_fat`
+
+`n_ingredients`
+
+`n_steps`
+
+We evaluated the model using R² score and Root Mean Squared Error (RMSE) to assess how well the model explains the variation in calories and how far its predictions deviate from the true values.
+
+`season`
+This column represents the seasonal label derived from the submission date of the recipe. The rationale for including this feature is that certain types of dishes are more common or richer in particular seasons (e.g., hearty, high-calorie recipes in winter). This categorical feature was one-hot encoded using `OneHotEncoder` in our preprocessing pipeline to ensure proper handling by the model.
+
+`minutes`
+This column measures the total cooking time in minutes. We included it because our earlier EDA and hypothesis testing showed that high-calorie recipes tend to take longer to prepare. Since cooking time varies widely across recipes, we applied standardization using `StandardScaler` to make this feature more numerically stable and prevent extreme values from dominating the model.
+
+`prop_fat`
+This column indicates the proportion of calories in the recipe that come from fat, calculated using the nutritional PDV information. We chose this feature because fat content is a major contributor to total caloric value, and recipes with higher fat density are expected to have higher calorie counts. This column was left as-is since it’s already in proportion form and centered around meaningful units.
+
+`n_ingredients`
+This column counts the number of ingredients in a recipe. We calculated the correlation and found a slight positive relationship with calorie content (correlation ≈ 0.13). The intuition is that recipes with more ingredients might have more complex or larger portions, which often lead to higher calorie totals. Although it was initially considered for transformation, we ultimately excluded it from the final preprocessor to simplify the pipeline.
+
+`n_steps`
+This column captures the number of procedural steps in the recipe instructions. Similar to `n_ingredients`, we found a positive correlation (~0.15) with calories, suggesting that more involved recipes may lead to richer, higher-calorie outcomes. Since the distribution of `n_steps` is skewed (as shown in the histogram), we applied standardization to scale this feature properly for modeling.
+
+We used **LinearRegression** from sklearn wrapped in a pipeline with preprocessing steps applied through ColumnTransformer. The data was split into a training and testing set using an 80/20 ratio with a fixed random_state for reproducibility.
+The performance of our final model was:
+
+R² Score: 0.0456
+RMSE: 575.25
+
+By including additional features such as `prop_fat`, `n_ingredients`, and `n_steps`, we were able to increase the explanatory power of the model and reduce prediction error. Although the overall R² remains modest, the enhanced model captures more meaningful variation in recipe calorie content than the baseline.
+
+
+
+## Fairness Analysis
+For our fairness analysis, we investigated whether our linear regression model predicts calories with equal accuracy across recipes of different quality levels, as measured by their average user rating. We split the dataset into two groups: high-rated recipes and low-rated recipes, using the median average rating as the threshold. We chose the median instead of the mean because ratings are often skewed, and the median provides a more robust central measure.
+To assess fairness, we evaluated the model's Root Mean Squared Error (RMSE) separately for each group. RMSE captures how far off the model's calorie predictions are from the actual values — a lower RMSE indicates better predictive accuracy. If the model were fair, we would expect similar RMSE values for both high-rated and low-rated recipes.
+
+**Null Hypothesis:** Our model is fair — the RMSE for high-rated and low-rated recipes is roughly the same, and any difference is due to random variation.
+
+**Alternative Hypothesis:** Our model is unfair — the RMSE differs significantly between high-rated and low-rated recipes.
+
+**Test Statistic:** Difference in RMSE (high-rated – low-rated)
+
+**Significance Level:** 0.05
+
+
+<iframe
+  src="assets/fairness.html"
+  width="700"
+  height="600"
+  frameborder="0"
+></iframe>
+
+
+We conducted a permutation test to assess the significance of the observed RMSE difference. The observed difference in RMSE between high-rated and low-rated recipes was 111.12, with the high-rated group having substantially worse predictive performance. After shuffling the group labels 1000 times and recalculating the RMSE differences under the null distribution, we found a p-value of 0.0000. This value is below our significance threshold of 0.05, leading us to reject the null hypothesis.
+
+This result suggests that our model is unfair, performing significantly worse on recipes that are more highly rated. In the context of user trust and recipe usability, this discrepancy could mislead users by giving less accurate calorie estimates for the recipes they are most likely to enjoy.
+
