@@ -48,7 +48,7 @@ We created two new columns, `prop_carbohydrates` and `prop_fat`, to represent th
 
 `prop_carbohydrates`
 
-This column estimates what fraction of total calories in the recipe comes from carbohydrates. The carbohydrates (PDV) column gives the % Daily Value for carbs. Then we convert this PDV into grams of carbohydrates by multiplying by 150 grams (100% daily value for carbs is assumed to be 150g).Since 1 gram of carbohydrate = 4 kcal, we multiply the result by 4 to get the total calories from carbohydrates. Finally, we then divide this value by the total calories in the recipe to compute the proportion
+This column estimates what fraction of total calories in the recipe comes from carbohydrates. The carbohydrates (PDV) column gives the % Daily Value for carbs. Then we convert this PDV into grams of carbohydrates by multiplying by 150 grams (100% daily value for carbs is assumed to be 150g).Since 1 gram of carbohydrate = 4 kcal, we multiply the result by 4 to get the total calories from carbohydrates. Finally, we then divide this value by the total calories in the recipe to compute the proportion.
 
 `prop_fat`
 
