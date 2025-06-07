@@ -44,7 +44,7 @@ We begin by merging the raw recipe metadata (RAW_recipes.csv) with user interact
 
 The original nutrition column in the dataset contains nutritional information for each recipe, stored as a string representation of a list. To make this column usable, we flattened the list into separate columns, one for each nutritional component using lambda function. 
 
-We created two new columns, `prop_carbohydrates` and `prop_fat`, to represent the proportion of calories in a recipe that come specifically from carbohydrates and fat, respectively. These derived features allow us to better understand the nutritional density and macronutrient breakdown of each recipe, which may be predictive of user preferences or ratings.
+We created two new columns, `prop_carbohydrates` and `prop_fat`, to represent the proportion of calories in a recipe that come specifically from carbohydrates and fat, respectively. These derived features allow us to better understand the nutritional density and macronutrient breakdown of each recipe, which may be predictive of amount of calories.
 
 `prop_carbohydrates`
 
